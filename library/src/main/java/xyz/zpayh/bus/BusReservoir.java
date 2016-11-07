@@ -11,6 +11,8 @@ import com.google.android.agera.Reservoir;
 import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -40,6 +42,8 @@ final class BusReservoir<T> implements Reservoir<T> {
 
     private T value;
 
+    private final Queue<T> queue;
+
     private boolean interrupt;//中断事件
 
     private final PriorityQueueUpdate queueUpdate;
@@ -49,6 +53,7 @@ final class BusReservoir<T> implements Reservoir<T> {
         //Main线程
         this.handler = new Handler(Looper.getMainLooper());
         this.queueUpdate = PriorityQueueUpdate.getInstance();
+        this.queue = new ArrayDeque<>();
     }
 
     void addUpdatable(@NonNull Updatable updatable,@ThreadMode int threadMode,boolean sticky,int priority){
@@ -78,8 +83,16 @@ final class BusReservoir<T> implements Reservoir<T> {
 
     @Override
     public void accept(@NonNull T value) {
-        this.value = value;
-        dispatchUpdate();
+        //this.value = value;
+        boolean shouldDispatchUpdate;
+        synchronized (queue){
+            boolean wasEmpty = queue.isEmpty();
+            boolean added = queue.offer(value);
+            shouldDispatchUpdate = wasEmpty && added;
+        }
+        if (shouldDispatchUpdate) {
+            dispatchUpdate();
+        }
     }
 
     @NonNull
@@ -97,8 +110,16 @@ final class BusReservoir<T> implements Reservoir<T> {
     }
 
     private void dispatchUpdate() {
+        boolean shouldDispatchUpdate;
+        synchronized (queue){
+            value = queue.poll();
+            shouldDispatchUpdate = !queue.isEmpty();
+        }
         synchronized (token){
             sendUpdate();
+        }
+        if (shouldDispatchUpdate){
+            dispatchUpdate();
         }
     }
 

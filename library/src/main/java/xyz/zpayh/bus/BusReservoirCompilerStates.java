@@ -44,6 +44,9 @@ public interface BusReservoirCompilerStates {
     interface RWhenUpdate<T> extends RCompile{
 
         @NonNull
+        RCompile posting();
+
+        @NonNull
         RCompile main();
 
         @NonNull

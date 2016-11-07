@@ -4,7 +4,25 @@
 
 
     <string name="base">基本用法</string>
+    <string name="sticky">接收粘性事件</string>
+    <string name="priority">设置接收事件优先级</string>
+    <string name="multithreading">设置接收事件线程</string>
     <string name="title_activity_base">BaseActivity</string>
 
     <string name="send">发送事件</string>
+    <string name="register_sticky">注册粘性事件</string>
+    <string name="unregister_sticky">注销接收事件</string>
+    <string name="hint_input">输入用户名</string>
+    <string name="title_activity_sticky">粘性事件</string>
+    <string name="title_activity_priority">优先级监听</string>
+    <string name="priority_10">优先级10</string>
+    <string name="priority_20">优先级20</string>
+    <string name="priority_15">优先级15</string>
+    <string name="priority_5">优先级5,但被优先级10的监听中断了事件接收，所以这里接收不到新事件</string>
+    <string name="title_activity_multithreading">多线程监听</string>
+
+    <string name="posting">POSTING线程</string>
+    <string name="main">主线程</string>
+    <string name="background">后台线程</string>
+    <string name="async">ASYNC线程</string>
 </resources>

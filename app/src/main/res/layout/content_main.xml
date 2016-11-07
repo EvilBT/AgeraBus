@@ -19,4 +19,22 @@
         android:text="@string/base"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_sticky"
+        android:text="@string/sticky"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_priority"
+        android:text="@string/priority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_multithreading"
+        android:text="@string/multithreading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

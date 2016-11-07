@@ -96,6 +96,13 @@ final class BusReservoirCompiler<T> implements
 
     @NonNull
     @Override
+    public BusReservoirCompiler posting() {
+        this.threadMode = POSTING;
+        return this;
+    }
+
+    @NonNull
+    @Override
     public BusReservoirCompiler main() {
         this.threadMode = MAIN;
         return this;

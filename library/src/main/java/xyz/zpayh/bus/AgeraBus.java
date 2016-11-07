@@ -55,18 +55,27 @@ public final class AgeraBus {
     public <T> void removeUpdatable(@NonNull final Updatable updatable,@NonNull final Class<T> type){
         Preconditions.checkNotNull(updatable);
         final String key = type.getName();
-        Reservoir<T> reservoir = reservoirMap.get(key);
-        if (reservoir != null){
-            reservoir.removeUpdatable(updatable);
-        }
+        Reservoir<T> reservoir = getBusReservoir(key);
+        reservoir.removeUpdatable(updatable);
     }
 
     public <T> void post(@NonNull final T value){
         final String key = value.getClass().getName();
-        Reservoir<T> reservoir = reservoirMap.get(key);
-        if (reservoir != null){
-            reservoir.accept(value);
+        Reservoir<T> reservoir = getBusReservoir(key);
+        reservoir.accept(value);
+    }
+
+    @NonNull
+    private <T> Reservoir<T> getBusReservoir(@NonNull String key) {
+        BusReservoir<T> reservoir;
+
+        if (reservoirMap.containsKey(key)){
+            reservoir = (BusReservoir<T>) reservoirMap.get(key);
+        }else{
+            reservoir = new BusReservoir<>();
+            reservoirMap.put(key,reservoir);
         }
+        return reservoir;
     }
 
     public <T> Supplier<Result<T>> getSupplier(@NonNull final Class<T> type){
