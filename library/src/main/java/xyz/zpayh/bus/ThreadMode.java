@@ -1,4 +1,4 @@
-package xyz.zpayh.rvbus;
+package xyz.zpayh.bus;
 
 import android.support.annotation.IntDef;
 

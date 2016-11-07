@@ -1,4 +1,4 @@
-package xyz.zpayh.rvbus;
+package xyz.zpayh.bus;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -14,10 +14,10 @@ import com.google.android.agera.Updatable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static xyz.zpayh.rvbus.ThreadMode.ASYNC;
-import static xyz.zpayh.rvbus.ThreadMode.BACKGROUND;
-import static xyz.zpayh.rvbus.ThreadMode.MAIN;
-import static xyz.zpayh.rvbus.ThreadMode.POSTING;
+import static xyz.zpayh.bus.ThreadMode.ASYNC;
+import static xyz.zpayh.bus.ThreadMode.BACKGROUND;
+import static xyz.zpayh.bus.ThreadMode.MAIN;
+import static xyz.zpayh.bus.ThreadMode.POSTING;
 
 
 
