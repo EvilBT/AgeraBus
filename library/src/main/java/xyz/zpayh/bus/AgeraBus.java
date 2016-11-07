@@ -69,7 +69,7 @@ public final class AgeraBus {
         }
     }
 
-    public <T> Supplier<Result<T>> get(@NonNull final Class<T> type){
+    public <T> Supplier<Result<T>> getSupplier(@NonNull final Class<T> type){
         return getBusReservoir(type);
     }
 

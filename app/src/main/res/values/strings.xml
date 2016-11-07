@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">AgeraBus</string>
     <string name="action_settings">Settings</string>
+
+
+    <string name="base">基本用法</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+    <string name="send">发送事件</string>
 </resources>
