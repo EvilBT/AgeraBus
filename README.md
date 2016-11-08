@@ -24,7 +24,7 @@ dependencies {
 ```
 **Step 3.** See this page 
 
-[基于Agera的EventBus实现库](http://www.jianshu.com/p/003a23395426) 
+[基于Agera的EventBus实现库](http://zpayh.xyz/2016/11/08/%E5%9F%BA%E4%BA%8EAgera%E7%9A%84EventBus%E5%AE%9E%E7%8E%B0%E5%BA%93/)
 
 ## Learn about Agera
 - [Agera Explained](https://github.com/google/agera/wiki)
