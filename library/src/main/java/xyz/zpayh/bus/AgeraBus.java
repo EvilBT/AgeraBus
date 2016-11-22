@@ -1,14 +1,18 @@
 package xyz.zpayh.bus;
 
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
+import android.util.Log;
 
 import com.google.android.agera.Preconditions;
 import com.google.android.agera.Reservoir;
 import com.google.android.agera.Result;
 import com.google.android.agera.Supplier;
 import com.google.android.agera.Updatable;
+
+import java.io.Serializable;
 
 
 /**
@@ -33,6 +37,10 @@ public final class AgeraBus {
             }
         }
         return sBus;
+    }
+
+    public static void init(@NonNull Context context){
+        AgeraBusClient.init(context);
     }
 
     private final ArrayMap<String,BusReservoir> reservoirMap;
@@ -60,6 +68,24 @@ public final class AgeraBus {
     }
 
     public <T> void post(@NonNull final T value){
+        final String key = value.getClass().getName();
+        Reservoir<T> reservoir = getBusReservoir(key);
+        reservoir.accept(value);
+
+        //跨进程
+        AgeraBusClient client = AgeraBusClient.getProcessClient();
+        if (client != null){
+            if (value instanceof Serializable){
+                client.postEvent((Serializable) value);
+            }else{
+                Log.d("AgeraBus", "不是可跨进程传递事件");
+            }
+        }else{
+            Log.d("AgeraBus", "不支持跨进程传递事件");
+        }
+    }
+
+    <T> void postRemote(@NonNull final T value){
         final String key = value.getClass().getName();
         Reservoir<T> reservoir = getBusReservoir(key);
         reservoir.accept(value);

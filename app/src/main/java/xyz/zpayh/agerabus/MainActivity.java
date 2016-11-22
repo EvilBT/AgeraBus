@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.bt_sticky).setOnClickListener(this);
         findViewById(R.id.bt_priority).setOnClickListener(this);
         findViewById(R.id.bt_multithreading).setOnClickListener(this);
+        findViewById(R.id.bt_remote).setOnClickListener(this);
     }
 
     @Override
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }break;
             case R.id.bt_multithreading:{
                 startActivity(new Intent(this,MultithreadingActivity.class));
+            }break;
+            case R.id.bt_remote:{
+                startActivity(new Intent(this,RemoteEventActivity.class));
             }break;
         }
     }

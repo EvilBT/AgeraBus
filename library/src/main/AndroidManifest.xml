@@ -1,8 +1,17 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="xyz.zpayh.bus">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="xyz.zpayh.bus">
 
-    <application android:allowBackup="true" android:label="@string/app_name"
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
         android:supportsRtl="true">
-
+        <service
+            android:name=".ipc.AgeraBusService"
+            android:process=":AgeraBus"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>
