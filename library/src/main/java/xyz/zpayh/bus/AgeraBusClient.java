@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.Parcelable;
 import android.os.Process;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
@@ -75,10 +76,23 @@ public class AgeraBusClient implements ServiceConnection{
 
     private void dispatch(@NonNull Message event){
         final Bundle bundle = event.getData();
-        Object obj = bundle.getSerializable(AgeraBusService.MSG_EVENT);
-        if (obj != null) {
-            mBus.postRemote(obj);
+        final int state = event.what;
+        switch (state){
+            case MessageState.MSG_FROM_SERIALIZABLE_EVENT:
+                Object obj = bundle.getSerializable(AgeraBusService.MSG_SERIALIZABLE_EVENT);
+                if (obj != null) {
+                    mBus.postRemote(obj);
+                }
+                break;
+            case MessageState.MSG_FROM_PARCELABLE_EVENT:
+                bundle.setClassLoader(getClass().getClassLoader());
+                Object parcelableObj = bundle.getParcelable(AgeraBusService.MSG_PARCELABLE_EVENT);
+                if (parcelableObj != null) {
+                    mBus.postRemote(parcelableObj);
+                }
+                break;
         }
+
     }
 
     @Override
@@ -93,9 +107,21 @@ public class AgeraBusClient implements ServiceConnection{
     }
 
     void postEvent(@NonNull Serializable event){
-        Message msg = Message.obtain(null,MessageState.MSG_FROM_EVENT);
+        Message msg = Message.obtain(null,MessageState.MSG_FROM_SERIALIZABLE_EVENT);
         Bundle bundle = new Bundle(1);
-        bundle.putSerializable(AgeraBusService.MSG_EVENT,event);
+        bundle.putSerializable(AgeraBusService.MSG_SERIALIZABLE_EVENT,event);
+        msg.setData(bundle);
+        try {
+            mServiceMessenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void postEvent(@NonNull Parcelable event){
+        Message msg = Message.obtain(null,MessageState.MSG_FROM_PARCELABLE_EVENT);
+        Bundle bundle = new Bundle(1);
+        bundle.putParcelable(AgeraBusService.MSG_PARCELABLE_EVENT,event);
         msg.setData(bundle);
         try {
             mServiceMessenger.send(msg);
@@ -129,7 +155,10 @@ public class AgeraBusClient implements ServiceConnection{
             if (client == null) return;
             final int state = msg.what;
             switch (state){
-                case MessageState.MSG_FROM_EVENT:
+                case MessageState.MSG_FROM_SERIALIZABLE_EVENT:
+                    client.dispatch(msg);
+                    break;
+                case MessageState.MSG_FROM_PARCELABLE_EVENT:
                     client.dispatch(msg);
                     break;
             }

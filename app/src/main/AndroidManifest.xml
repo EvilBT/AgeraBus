@@ -42,7 +42,8 @@
             android:exported="true">
         </service>
 
-        <activity android:name=".RemoteEventActivity">
+        <activity android:name=".RemoteEventActivity"
+            android:process=":Remote">
         </activity>
     </application>
 

@@ -15,7 +15,15 @@
         android:id="@+id/bt_send"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/send_remote_event"
+        android:text="@string/send_remote_serializable_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_above="@id/bt_send"
+        android:id="@+id/bt_send_teacher"
+        android:layout_centerHorizontal="true"
+        android:text="@string/send_remote_parcelable_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

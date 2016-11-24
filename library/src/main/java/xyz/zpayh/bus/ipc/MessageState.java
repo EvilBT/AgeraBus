@@ -10,8 +10,9 @@ import android.support.annotation.IntDef;
  * 修改时间:
  * 修改备注:
  */
-@IntDef({MessageState.MSG_FROM_CLIENT,MessageState.MSG_FROM_EVENT})
+@IntDef({MessageState.MSG_FROM_CLIENT,MessageState.MSG_FROM_SERIALIZABLE_EVENT,MessageState.MSG_FROM_PARCELABLE_EVENT})
 public @interface MessageState {
     int MSG_FROM_CLIENT = 0;
-    int MSG_FROM_EVENT = 1;
+    int MSG_FROM_SERIALIZABLE_EVENT = 1;
+    int MSG_FROM_PARCELABLE_EVENT = 2;
 }

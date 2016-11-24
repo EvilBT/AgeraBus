@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.Parcelable;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
@@ -15,7 +16,8 @@ import java.lang.ref.WeakReference;
 
 public class AgeraBusService extends Service {
 
-    public final static String MSG_EVENT = "event";
+    public final static String MSG_SERIALIZABLE_EVENT = "Serializable event";
+    public final static String MSG_PARCELABLE_EVENT = "Parcelable event";
 
     private final Messenger mServerMessenger = new Messenger(new AgeraHandler(this));
 
@@ -67,10 +69,18 @@ public class AgeraBusService extends Service {
                 case MessageState.MSG_FROM_CLIENT:
                     service.putMessenger(msg.arg1,msg.replyTo);
                     break;
-                case MessageState.MSG_FROM_EVENT:
+                case MessageState.MSG_FROM_SERIALIZABLE_EVENT:
                     final Bundle bundle = msg.getData();
-                    final Object event = bundle.getSerializable(MSG_EVENT);
-                    if (event != null) {
+                    final Object serializableEvent = bundle.getSerializable(MSG_SERIALIZABLE_EVENT);
+                    if (serializableEvent != null) {
+                        service.dispatch(msg);
+                    }
+                    break;
+                case MessageState.MSG_FROM_PARCELABLE_EVENT:
+                    final Bundle bundle1 = msg.getData();
+                    bundle1.setClassLoader(getClass().getClassLoader());
+                    final Parcelable parcelableEvent = bundle1.getParcelable(MSG_PARCELABLE_EVENT);
+                    if (parcelableEvent != null){
                         service.dispatch(msg);
                     }
                     break;

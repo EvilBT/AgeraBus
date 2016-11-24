@@ -26,5 +26,6 @@
     <string name="main">主线程</string>
     <string name="background">后台线程</string>
     <string name="async">ASYNC线程</string>
-    <string name="send_remote_event">发送跨进程事件</string>
+    <string name="send_remote_serializable_event">发送跨Serializable进程事件</string>
+    <string name="send_remote_parcelable_event">发送跨Parcelable进程事件</string>
 </resources>

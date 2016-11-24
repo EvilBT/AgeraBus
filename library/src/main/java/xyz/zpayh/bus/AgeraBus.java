@@ -2,6 +2,7 @@ package xyz.zpayh.bus;
 
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.util.Log;
@@ -77,6 +78,8 @@ public final class AgeraBus {
         if (client != null){
             if (value instanceof Serializable){
                 client.postEvent((Serializable) value);
+            }else if (value instanceof Parcelable) {
+                client.postEvent((Parcelable) value);
             }else{
                 Log.d("AgeraBus", "不是可跨进程传递事件");
             }

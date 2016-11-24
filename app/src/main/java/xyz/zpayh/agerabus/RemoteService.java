@@ -11,12 +11,28 @@ import android.widget.Toast;
 import com.google.android.agera.Receiver;
 import com.google.android.agera.Updatable;
 
+import xyz.zpayh.agerabus.event.RemoteTeacher;
 import xyz.zpayh.agerabus.event.RemoteUser;
 import xyz.zpayh.bus.AgeraBus;
 
 public class RemoteService extends Service implements Updatable{
     public RemoteService() {
     }
+
+    public Updatable mTeacherUpdatable = new Updatable() {
+        @Override
+        public void update() {
+            AgeraBus.getDefault()
+                    .getSupplier(RemoteTeacher.class)
+                    .get().ifSucceededSendTo(new Receiver<RemoteTeacher>() {
+                @Override
+                public void accept(@NonNull RemoteTeacher value) {
+                    Toast.makeText(RemoteService.this, value.getName(), Toast.LENGTH_SHORT).show();
+                    Log.d("RemoteService", "BirthDay:" + value.getBirthDay().getTime());
+                }
+            });
+        }
+    };
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -30,6 +46,9 @@ public class RemoteService extends Service implements Updatable{
         Log.d("RemoteService", "注册" + Process.myPid());
         AgeraBus.getDefault()
                 .addUpdatable(this, RemoteUser.class);
+
+        AgeraBus.getDefault()
+                .addUpdatable(mTeacherUpdatable, RemoteTeacher.class);
     }
 
     @Override
@@ -38,6 +57,9 @@ public class RemoteService extends Service implements Updatable{
         Log.d("RemoteService", "注销" + Process.myPid());
         AgeraBus.getDefault()
                 .removeUpdatable(this, RemoteUser.class);
+
+        AgeraBus.getDefault()
+                .removeUpdatable(mTeacherUpdatable, RemoteTeacher.class);
     }
 
     @Override
