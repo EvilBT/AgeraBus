@@ -18,14 +18,17 @@ allprojects {
 **Step 2.** Add the dependency
 ```
 dependencies {
-    compile 'com.github.EvilBT:AgeraBus:v1.0.2'
-    compile 'com.google.android.agera:agera:1.2.0-beta3'
+    compile 'com.github.EvilBT:AgeraBus:v1.0.3'
+    compile 'com.google.android.agera:agera:1.2.0'
 }
 ```
 **Step 3.** See this page 
 
 [基于Agera的EventBus实现库](http://zpayh.xyz/2016/11/08/%E5%9F%BA%E4%BA%8EAgera%E7%9A%84EventBus%E5%AE%9E%E7%8E%B0%E5%BA%93/)
 
+Add multi-process support
+
+[基于Agera的EventBus实现库2-添加多进程支持](http://www.jianshu.com/p/b3b0b30f7e82)
 ## Learn about Agera
 - [Agera Explained](https://github.com/google/agera/wiki)
 - [Chinese](https://github.com/captain-miao/AndroidAgeraTutorial/wiki)
