@@ -18,7 +18,7 @@ allprojects {
 **Step 2.** Add the dependency
 ```
 dependencies {
-    compile 'com.github.EvilBT:AgeraBus:v1.0.1'
+    compile 'com.github.EvilBT:AgeraBus:v1.0.2'
     compile 'com.google.android.agera:agera:1.2.0-beta3'
 }
 ```

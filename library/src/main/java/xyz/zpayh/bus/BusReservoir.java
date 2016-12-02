@@ -46,6 +46,8 @@ final class BusReservoir<T> implements Reservoir<T> {
 
     private boolean interrupt;//中断事件
 
+    private Thread sendUpdateThread;//发送事件线程
+
     private final PriorityQueueUpdate queueUpdate;
 
     BusReservoir() {
@@ -124,6 +126,7 @@ final class BusReservoir<T> implements Reservoir<T> {
     }
 
     private void sendUpdate() {
+        sendUpdateThread = Thread.currentThread();
         queueUpdate.forEach(new PriorityQueueUpdate.Callback() {
             @Override
             public boolean callback(@Nullable Updatable updatable, PriorityQueueUpdate.Pair pair) {
@@ -146,12 +149,16 @@ final class BusReservoir<T> implements Reservoir<T> {
                 updatable.update();
                 break;
             case MAIN:
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        updatable.update();
-                    }
-                });
+                if (Looper.myLooper() == Looper.getMainLooper()){
+                    updatable.update();
+                }else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            updatable.update();
+                        }
+                    });
+                }
                 break;
 
             case BACKGROUND:
@@ -180,8 +187,15 @@ final class BusReservoir<T> implements Reservoir<T> {
     }
 
     void cancel(T value) {
+        Thread cancel = Thread.currentThread();
         if (this.value == value){
-            this.interrupt = true;
+            if (cancel == sendUpdateThread) {
+                this.interrupt = true;
+            }else{
+                Log.d("AgeraBus","取消事件必须与发送事件处于同一个线程，否则无效");
+                //取消订阅事件必须在POSTING线程
+                //throw new IllegalStateException("Unsubscribing must be in the POSTING thread");
+            }
         }
     }
 }
