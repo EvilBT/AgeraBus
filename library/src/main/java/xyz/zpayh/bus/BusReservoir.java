@@ -183,6 +183,9 @@ final class BusReservoir<T> implements Reservoir<T> {
                     }
                 });
                 break;
+
+            default:
+                break;
         }
     }
 

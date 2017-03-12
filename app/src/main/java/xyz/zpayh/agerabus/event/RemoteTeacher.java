@@ -21,16 +21,16 @@ public class RemoteTeacher implements Parcelable {
     private String mName;
 
     public RemoteTeacher(Date birthDay, String name) {
-        mBirthDay = birthDay;
+        mBirthDay = new Date(birthDay.getTime());
         mName = name;
     }
 
     public Date getBirthDay() {
-        return mBirthDay;
+        return new Date(mBirthDay.getTime());
     }
 
     public void setBirthDay(Date birthDay) {
-        mBirthDay = birthDay;
+        mBirthDay = new Date(birthDay.getTime());
     }
 
     public String getName() {

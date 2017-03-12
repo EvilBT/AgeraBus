@@ -84,6 +84,8 @@ public class AgeraBusService extends Service {
                         service.dispatch(msg);
                     }
                     break;
+                default:
+                    break;
             }
         }
     }

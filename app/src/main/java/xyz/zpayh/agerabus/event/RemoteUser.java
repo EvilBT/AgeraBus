@@ -21,6 +21,6 @@ public class RemoteUser implements Serializable{
 
     public RemoteUser(String name,Date date) {
         mName = name;
-        mDate = date;
+        mDate = new Date(date.getTime());
     }
 }

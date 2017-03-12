@@ -91,6 +91,8 @@ public class AgeraBusClient implements ServiceConnection{
                     mBus.postRemote(parcelableObj);
                 }
                 break;
+            default:
+                break;
         }
 
     }
@@ -160,6 +162,8 @@ public class AgeraBusClient implements ServiceConnection{
                     break;
                 case MessageState.MSG_FROM_PARCELABLE_EVENT:
                     client.dispatch(msg);
+                    break;
+                default:
                     break;
             }
         }

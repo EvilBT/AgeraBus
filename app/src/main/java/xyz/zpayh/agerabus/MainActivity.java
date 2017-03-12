@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_remote:{
                 startActivity(new Intent(this,RemoteEventActivity.class));
             }break;
+            default:
+                break;
         }
     }
 }
